@@ -1,19 +1,17 @@
 use std::io::stdin;
+use std::str;
 fn main() {
     let input = input();
-
-    let n: Vec<i32> = input
-        .split_whitespace()
-        .map(|x| x.parse::<i32>().unwrap())
-        .collect();
-
-    let mut max: i32 = 0;
-    for element in n {
-        if element > max {
-            max = element;
+    let split: Vec<&str> = input.split_whitespace().collect();
+    let mut ans: &str = "a";
+    let mut max = 0;
+    for element in split {
+        if element.len() > max {
+            max = element.len();
+            ans = element;
         }
     }
-    println!("{}", max);
+    println!("{}", ans)
 }
 
 fn input() -> String {
