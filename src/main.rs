@@ -1,17 +1,24 @@
 use std::io::stdin;
-use std::str;
 fn main() {
     let input = input();
-    let split: Vec<&str> = input.split_whitespace().collect();
-    let mut ans: &str = "a";
-    let mut max = 0;
-    for element in split {
-        if element.len() > max {
-            max = element.len();
-            ans = element;
+
+    let n: Vec<i32> = input
+        .split_whitespace()
+        .map(|x| x.parse::<i32>().unwrap())
+        .collect();
+
+    let mut ans: Option<i32> = None;
+    for element in n {
+        if element % 2 == 0 {
+            ans = Some(element);
+            break;
         }
     }
-    println!("{}", ans)
+
+    match ans {
+        None => println!("偶数なし"),
+        Some(value) => println!("{}", value),
+    }
 }
 
 fn input() -> String {
