@@ -7,17 +7,21 @@ fn main() {
         .map(|x| x.parse::<i32>().unwrap())
         .collect();
 
-    let mut ans: Option<i32> = None;
+    let mut max: Option<i32> = None;
     for element in n {
-        if element % 2 == 0 {
-            ans = Some(element);
-            break;
+        match max {
+            None => max = Some(element),
+            Some(value) => {
+                if element < value {
+                    max = Some(element);
+                }
+            }
         }
     }
 
-    match ans {
-        None => println!("偶数なし"),
+    match max {
         Some(value) => println!("{}", value),
+        None => println!("最小値なし"),
     }
 }
 
