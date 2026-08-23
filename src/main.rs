@@ -7,22 +7,13 @@ fn main() {
         .map(|x| x.parse::<i32>().unwrap())
         .collect();
 
-    let mut max: Option<i32> = None;
+    let mut sum = 0;
+    let count = n.len() as i32;
     for element in n {
-        match max {
-            None => max = Some(element),
-            Some(value) => {
-                if element < value {
-                    max = Some(element);
-                }
-            }
-        }
+        sum += element;
     }
 
-    match max {
-        Some(value) => println!("{}", value),
-        None => println!("最小値なし"),
-    }
+    println!("{}", sum / count)
 }
 
 fn input() -> String {
