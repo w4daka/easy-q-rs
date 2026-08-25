@@ -8,7 +8,11 @@ fn main() {
     //     .collect();
 
     let s = String::from("hello");
-    take_string2(&s);
+
+    let len = string_len(&s);
+
+    println!("{}", len);
+    println!("{}", s);
 }
 
 // fn input() -> String {
@@ -16,30 +20,18 @@ fn main() {
 //     stdin().read_line(&mut input).unwrap();
 //     input
 // }
-// Stringを所有して渡す->move->元の変数は使えない
-// Stringを借りて渡すー>borrowー>元の変数を使える
-// 独立したStringが必要 -> clone ->別のStringを作る
-fn take_string1(s: String) -> String {
-    s
+fn string_len(s: &str) -> usize {
+    s.len()
 }
 
-fn take_string2(s: &str) {
-    println!("{}", s)
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-fn take_string3(s: &String) -> String {
-    s.clone()
+    #[test]
+    fn test_string_len() {
+        assert_eq!(string_len("hello"), 5);
+        assert_eq!(string_len(""), 0);
+        assert_eq!(string_len("rust"), 4);
+    }
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//
-//     #[test]
-//     fn test_max_ref() {
-//         assert_eq!(max_ref(&10, &20), 20);
-//         assert_eq!(max_ref(&30, &5), 30);
-//         assert_eq!(max_ref(&7, &7), 7);
-//         assert_eq!(max_ref(&-10, &-20), -10);
-//     }
-// }
