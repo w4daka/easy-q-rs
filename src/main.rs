@@ -7,10 +7,10 @@ fn main() {
         .map(|x| x.parse::<i32>().unwrap())
         .collect();
 
-    match first_even(&n) {
-        None => println!("偶数なし"),
-        Some(value) => println!("{}", value),
-    }
+    let a = &n[0];
+    let b = &n[1];
+
+    println!("{}", max_ref(a, b))
 }
 
 fn input() -> String {
@@ -19,14 +19,10 @@ fn input() -> String {
     input
 }
 
-fn first_even(numbers: &[i32]) -> Option<i32> {
-    let mut ans = None;
-    for element in numbers {
-        if element % 2 == 0 {
-            // 「参照をたどって、その i32 の値を取得して Option<i32> に入れている」
-            ans = Some(*element);
-            break;
-        }
+fn max_ref(a: &i32, b: &i32) -> i32 {
+    let mut ans = *a;
+    if a < b {
+        ans = *b;
     }
     ans
 }
@@ -36,10 +32,10 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_first_even() {
-        assert_eq!(first_even(&[1, 3, 5, 8, 10]), Some(8));
-        assert_eq!(first_even(&[1, 3, 5]), None);
-        assert_eq!(first_even(&[2, 4, 6]), Some(2));
-        assert_eq!(first_even(&[]), None);
+    fn test_max_ref() {
+        assert_eq!(max_ref(&10, &20), 20);
+        assert_eq!(max_ref(&30, &5), 30);
+        assert_eq!(max_ref(&7, &7), 7);
+        assert_eq!(max_ref(&-10, &-20), -10);
     }
 }
