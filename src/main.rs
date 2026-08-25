@@ -7,8 +7,8 @@ fn main() {
         .map(|x| x.parse::<i32>().unwrap())
         .collect();
 
-    match search_max(n) {
-        None => println!("最大値なし"),
+    match first_even(&n) {
+        None => println!("偶数なし"),
         Some(value) => println!("{}", value),
     }
 }
@@ -19,17 +19,27 @@ fn input() -> String {
     input
 }
 
-fn search_max(numbers: Vec<i32>) -> Option<i32> {
-    let mut max = None;
+fn first_even(numbers: &[i32]) -> Option<i32> {
+    let mut ans = None;
     for element in numbers {
-        match max {
-            None => max = Some(element),
-            Some(value) => {
-                if value < element {
-                    max = Some(element)
-                }
-            }
+        if element % 2 == 0 {
+            // 「参照をたどって、その i32 の値を取得して Option<i32> に入れている」
+            ans = Some(*element);
+            break;
         }
     }
-    max
+    ans
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_first_even() {
+        assert_eq!(first_even(&[1, 3, 5, 8, 10]), Some(8));
+        assert_eq!(first_even(&[1, 3, 5]), None);
+        assert_eq!(first_even(&[2, 4, 6]), Some(2));
+        assert_eq!(first_even(&[]), None);
+    }
 }
