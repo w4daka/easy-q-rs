@@ -2,14 +2,35 @@ use std::collections::HashMap;
 
 pub fn count_words(input: &str) -> HashMap<&str, usize> {
     let mut ans = HashMap::new();
-    let split_input = input.split_whitespace();
 
     // elementはループのたびに1単語になる
-    for element in split_input {
-        if let Some(one) = ans.get_mut(element) {
-            *one += 1;
-        } else {
-            ans.insert(element, 1);
+    for element in input.split_whitespace() {
+        // 単語を1つ取得
+        //     ↓
+        // HashMapから検索
+        //     ↓
+        // ┌───────────────┐
+        // │ キーが存在する │
+        // └───────┬───────┘
+        //         ↓
+        //     Some(value)
+        //         ↓
+        //     *value += 1
+        //
+        // ┌───────────────┐
+        // │ キーがない     │
+        // └───────┬───────┘
+        //         ↓
+        //       None
+        //         ↓
+        // insert(element)
+        // get_mutはそのキーに対応する値への可変参照を取得する
+        match ans.get_mut(element) {
+            // Optionでキーが存在した/しなかったを表現
+            Some(value) => *value += 1,
+            None => {
+                ans.insert(element, 1);
+            }
         }
     }
     ans
