@@ -4,8 +4,13 @@ pub fn count_words(input: &str) -> HashMap<&str, usize> {
     let mut ans = HashMap::new();
     let split_input = input.split_whitespace();
 
+    // elementはループのたびに1単語になる
     for element in split_input {
-        *ans.entry(element).or_insert(0) += 1;
+        if let Some(one) = ans.get_mut(element) {
+            *one += 1;
+        } else {
+            ans.insert(element, 1);
+        }
     }
     ans
 }
