@@ -89,4 +89,60 @@ mod tests {
 
         assert!(result.is_empty());
     }
+
+    #[test]
+    fn handles_multiple_spaces() {
+        let result = count_words("rust    rust     fast");
+
+        assert_eq!(result.get("rust"), Some(&2));
+        assert_eq!(result.get("fast"), Some(&1));
+    }
+    #[test]
+    fn handles_leading_and_trailing_whitespace() {
+        let result = count_words("   rust is fast   ");
+
+        assert_eq!(result.get("rust"), Some(&1));
+        assert_eq!(result.get("is"), Some(&1));
+        assert_eq!(result.get("fast"), Some(&1));
+    }
+    #[test]
+    fn handles_only_repeated_word() {
+        let result = count_words("rust rust rust rust");
+
+        assert_eq!(result.len(), 1);
+        assert_eq!(result.get("rust"), Some(&4));
+    }
+    #[test]
+    fn handles_all_unique_words() {
+        let result = count_words("rust is fast safe");
+
+        assert_eq!(result.len(), 4);
+        assert_eq!(result.get("rust"), Some(&1));
+        assert_eq!(result.get("is"), Some(&1));
+        assert_eq!(result.get("fast"), Some(&1));
+        assert_eq!(result.get("safe"), Some(&1));
+    }
+
+    #[test]
+    fn handles_numbers_as_words() {
+        let result = count_words("123 456 123");
+
+        assert_eq!(result.get("123"), Some(&2));
+        assert_eq!(result.get("456"), Some(&1));
+    }
+    #[test]
+    fn handles_different_whitespace() {
+        let result = count_words("rust\tis\nfast");
+
+        assert_eq!(result.get("rust"), Some(&1));
+        assert_eq!(result.get("is"), Some(&1));
+        assert_eq!(result.get("fast"), Some(&1));
+    }
+    #[test]
+    fn does_not_create_unexpected_words() {
+        let result = count_words("rust rust");
+
+        assert_eq!(result.len(), 1);
+        assert_eq!(result.get("rust"), Some(&2));
+    }
 }

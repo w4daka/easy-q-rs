@@ -10,7 +10,7 @@ fn main() {
     //     .collect();
     let result = count_words(&input);
     for (key, value) in &result {
-        println!("{}: {}", key, value)
+        println!("{}: {}", key, value);
     }
 }
 
