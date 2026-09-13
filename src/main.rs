@@ -1,19 +1,17 @@
 use std::io::stdin;
+
+use easy_rs::count_words;
 fn main() {
     let input = input();
-
-    let n: Vec<i32> = input
-        .split_whitespace()
-        .map(|x| x.parse::<i32>().unwrap())
-        .collect();
-
-    let mut max: i32 = 0;
-    for element in n {
-        if element > max {
-            max = element;
-        }
+    //
+    // let n =
+    // input.split_whitespace();
+    //     .map(|x| x.parse::<i32>().unwrap())
+    //     .collect();
+    let result = count_words(&input);
+    for (key, value) in &result {
+        println!("{}: {}", key, value);
     }
-    println!("{}", max);
 }
 
 fn input() -> String {
